@@ -40,9 +40,20 @@ export const FolderRepository = {
   searchFolders: async (query: string) => {
     return await db.query.folders.findMany({
       where: or(
-        like(folders.name, query),
-        eq(folders.name, query),
+        like(folders.name, `${query}%`),
         like(folders.name, `%${query}%`),
+        like(folders.name, `%${query}`),
+      ),
+      limit: 50, // Batasi hasil untuk keamanan performa
+    });
+  },
+
+  searchFiles: async (query: string) => {
+    return await db.query.files.findMany({
+      where: or(
+        like(files.name, `${query}%`),
+        like(files.name, `%${query}%`),
+        like(files.name, `%${query}`),
       ),
       limit: 50, // Batasi hasil untuk keamanan performa
     });
