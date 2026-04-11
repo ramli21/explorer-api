@@ -35,4 +35,4 @@ const app = new Elysia()
     };
   })
   .group('/api', (app) => app.use(folderRoutes).use(searchRoutes))
-  .listen(3000);
+  .listen(process.env.PORT || 3000);

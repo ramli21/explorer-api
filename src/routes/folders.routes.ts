@@ -24,6 +24,6 @@ export const folderRoutes = new Elysia({ prefix: '/folders' })
   )
 
   .get('/test-error', () => {
-    // Contoh endpoint untuk testing error handling
+    // Example for testing error handling
     throw new Error('This is a test error');
   });

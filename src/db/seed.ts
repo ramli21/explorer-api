@@ -4,13 +4,13 @@ import { folders, files } from './schema';
 async function seed() {
   console.log('🌱 Start seeding...');
 
-  // 1. Bersihkan database (Optional)
+  // clear data (Optional)
   await db.delete(files);
   await db.delete(folders);
 
-  // 2. Buat Root Folders (seperti C:, D:, atau Documents)
+  // Create Root Folders
   const rootIds = [];
-  for (let i = 1; i <= 5; i++) {
+  for (let i = 1; i <= 10; i++) {
     const id = crypto.randomUUID();
     rootIds.push(id);
     await db.insert(folders).values({
@@ -20,7 +20,7 @@ async function seed() {
     });
   }
 
-  // 3. Buat Subfolders (Level 1)
+  // Create Subfolders (Level 2)
   const subFolderIds = [];
   for (const rootId of rootIds) {
     for (let i = 1; i <= 3; i++) {
@@ -34,10 +34,24 @@ async function seed() {
     }
   }
 
-  // 4. Buat Jutaan/Ribuan Data (Level 2 & Files) - Contoh 100 data saja
+  // Create Subfolders (Level 2)
+  const subFolder2Ids = [];
+  for (const subFolderId of subFolderIds) {
+    for (let i = 1; i <= 5; i++) {
+      const id = crypto.randomUUID();
+      subFolder2Ids.push(id);
+      await db.insert(folders).values({
+        id: id,
+        name: `Sub ${i} dari ${subFolderId.slice(0, 4)}`,
+        parentId: subFolderId,
+      });
+    }
+  }
+
+  // Create many Data (Folder level 3 & files ) - Example 300 data only
   console.log('📂 Generating deep folders and files...');
-  for (let i = 0; i < 100; i++) {
-    const randomParent = subFolderIds[Math.floor(Math.random() * subFolderIds.length)];
+  for (let i = 0; i < 300; i++) {
+    const randomParent = subFolder2Ids[Math.floor(Math.random() * subFolder2Ids.length)];
     const folderId = crypto.randomUUID();
 
     await db.insert(folders).values({
@@ -46,7 +60,7 @@ async function seed() {
       parentId: randomParent,
     });
 
-    // Tambahkan file ke dalam folder tersebut
+    // Adding file to the folder
     await db.insert(files).values({
       id: crypto.randomUUID(),
       name: `Document_${i}.pdf`,
