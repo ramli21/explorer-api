@@ -16,8 +16,7 @@ Backend service untuk aplikasi Windows Explorer Clone, dibangun dengan fokus pad
 - **Hierarchical Data Model:** Menggunakan _Adjacency List Model_ dengan indexing pada `parent_id`.
 - **Modular Routing:** Organisasi kode berbasis plugin untuk kemudahan maintenance.
 - **Global Error Handling:** Format error JSON yang konsisten (404, 422, 500).
-- **Search Engine:** Pencarian folder dengan optimasi indexing.
-- **Automated Documentation:** Terintegrasi dengan Swagger UI.
+- **Search Engine:** Pencarian folder & file dengan optimasi indexing.
 
 ## 🛠️ Persiapan & Instalasi
 
